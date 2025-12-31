@@ -417,6 +417,9 @@ const AIFeatureCard = ({ item, apiKey }) => {
     const baseContext = `La tecnología es "${item.name}": ${item.description}.`;
     
     switch (type) {
+      case 'guide':
+        prompt = `${baseContext} Genera una guía de inicio rápido paso a paso para aprender a integrar y usar ${item.name} en un proyecto React en 5 minutos. Incluye ejemplos de código claros. Idioma: Español.`;
+        break;
       case 'explain':
         prompt = `${baseContext} Explícame qué es y para qué sirve ${item.name} como si fuera un desarrollador Junior o un estudiante. Usa analogías simples. Mantén la respuesta breve (máximo 3 frases). Idioma: Español.`;
         break;
@@ -459,6 +462,14 @@ const AIFeatureCard = ({ item, apiKey }) => {
       </div>
 
       <div className="flex flex-wrap gap-2 mb-4">
+        <button
+          onClick={() => handleAction('guide')}
+          disabled={loading}
+          className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${activeTab === 'guide' ? 'bg-purple-600 text-white' : 'bg-white text-purple-700 border border-purple-200 hover:bg-purple-50'}`}
+        >
+          <BookOpen size={16} />
+          Guía de Inicio
+        </button>
         <button
           onClick={() => handleAction('explain')}
           disabled={loading}
@@ -753,15 +764,7 @@ export default function App() {
           </div>
 
           {/* Additional Resources (Mock) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-             <div className="p-4 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all cursor-pointer group bg-white">
-                <div className="text-sm font-medium text-gray-900 group-hover:text-blue-600 mb-1">
-                  Guía de inicio
-                </div>
-                <div className="text-xs text-gray-500">
-                  Aprende a integrar {activeItem.name} en 5 minutos.
-                </div>
-             </div>
+          <div className="grid grid-cols-1">
              <div className="p-4 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all cursor-pointer group bg-white">
                 <div className="text-sm font-medium text-gray-900 group-hover:text-blue-600 mb-1">
                   Repositorio GitHub
