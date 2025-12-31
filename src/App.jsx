@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { 
   Search, 
   Terminal, 
@@ -18,7 +18,9 @@ import {
   Code,
   Lightbulb,
   MessageSquare,
-  Send
+  Send,
+  Menu,
+  X
 } from 'lucide-react';
 
 // --- DATA SOURCE ---
@@ -541,6 +543,7 @@ const AIFeatureCard = ({ item, apiKey }) => {
 export default function App() {
   const [selectedId, setSelectedId] = useState(libraryData[0].id);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Mobile sidebar state
   
   // API Key State
   const [apiKey, setApiKey] = useState("");
@@ -587,13 +590,32 @@ export default function App() {
   return (
     <div className="flex h-screen bg-gray-50 text-gray-900 font-sans overflow-hidden">
       
+      {/* --- MOBILE SIDEBAR OVERLAY --- */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-20 md:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
       {/* --- SIDEBAR (INDICE IZQUIERDO) --- */}
-      <aside className="w-80 bg-white border-r border-gray-200 flex flex-col h-full shadow-sm z-10 hidden md:flex">
-        <div className="p-5 border-b border-gray-100 bg-white sticky top-0">
-          <h1 className="text-xl font-bold text-gray-800 flex items-center gap-2 mb-4">
+      <aside className={`
+        fixed inset-y-0 left-0 w-80 bg-white border-r border-gray-200 flex flex-col h-full shadow-lg z-30 transition-transform duration-300 ease-in-out md:static md:translate-x-0 md:shadow-sm
+        ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+      `}>
+        <div className="p-5 border-b border-gray-100 bg-white sticky top-0 flex items-center justify-between">
+          <h1 className="text-xl font-bold text-gray-800 flex items-center gap-2">
             <BookOpen className="text-blue-600" />
-            <span>React Stack 2026</span>
+            <span className="tracking-tight">React Tech</span>
           </h1>
+          {/* Close button for mobile */}
+          <button 
+            onClick={() => setIsSidebarOpen(false)}
+            className="md:hidden p-2 text-gray-500 hover:bg-gray-100 rounded-lg"
+          >
+            <X size={20} />
+          </button>
+        </div>
           
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
@@ -605,7 +627,6 @@ export default function App() {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-        </div>
 
         <div className="flex-1 overflow-y-auto p-4 space-y-6 scrollbar-thin scrollbar-thumb-gray-200">
           {Object.entries(groupedData).map(([category, items]) => (
@@ -617,7 +638,10 @@ export default function App() {
                 {items.map(item => (
                   <li key={item.id}>
                     <button
-                      onClick={() => setSelectedId(item.id)}
+                      onClick={() => {
+                        setSelectedId(item.id);
+                        setIsSidebarOpen(false);
+                      }}
                       className={`w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 flex items-center justify-between group ${
                         selectedId === item.id 
                           ? 'bg-blue-50 text-blue-700 shadow-sm ring-1 ring-blue-100' 
@@ -657,10 +681,21 @@ export default function App() {
       <main className="flex-1 overflow-y-auto bg-white/50 relative">
         <div className="max-w-4xl mx-auto p-6 md:p-12 pb-24">
           
-          {/* Header Area */}
-          <div className="flex items-start justify-between mb-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div className="flex items-center gap-4">
-              <div className="p-3 bg-white shadow-md border border-gray-100 rounded-xl">
+          {/* Header Mobile Toggle */}
+          <div className="md:hidden flex items-center gap-3 mb-6">
+            <button 
+              onClick={() => setIsSidebarOpen(true)}
+              className="p-2 -ml-2 text-gray-600 hover:bg-gray-100 rounded-lg"
+            >
+              <Menu size={24} />
+            </button>
+            <span className="font-semibold text-gray-900">React Tech Book</span>
+          </div>
+
+          {/* Header */}
+          <header className="flex items-start justify-between mb-8 gap-4">
+            <div className="flex items-start gap-4">
+              <div className="p-3 bg-white shadow-md border border-gray-100 rounded-xl hidden sm:block">
                 <IconComponent size={32} className="text-blue-600" />
               </div>
               <div>
@@ -687,7 +722,7 @@ export default function App() {
               <span>Documentación</span>
               <ExternalLink size={14} />
             </a>
-          </div>
+          </header>
 
           <div className="h-px bg-gray-200 w-full mb-8"></div>
 
