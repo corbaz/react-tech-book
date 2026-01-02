@@ -1,49 +1,51 @@
-import React, { useState, useMemo } from 'react';
-import { Search, BookOpen, ChevronRight, ChevronDown, FolderOpen } from 'lucide-react';
-import { Badge } from '../ui/Badge';
+import { useState, useMemo } from "react";
+import {
+  Search,
+  BookOpen,
+  ChevronRight,
+  ChevronDown,
+  FolderOpen,
+} from "lucide-react";
+import pkg from "../../../package.json";
 
-export const Sidebar = ({ 
-  searchTerm, 
-  setSearchTerm, 
-  categories, 
-  filteredItems, 
-  selectedId, 
+export const Sidebar = ({
+  searchTerm,
+  setSearchTerm,
+  categories,
+  filteredItems,
+  selectedId,
   onSelect,
   isOpen,
-  onClose
+  onClose,
 }) => {
-  // State for expanded accordion sections
-  // Initialize with all categories open by default or just the first one?
-  // Let's default to all open for better discoverability, or maybe just the one with the selected item.
-  // Given the user wants to avoid scrolling, maybe collapsed is better?
-  // But if I collapse everything, the user sees nothing.
-  // Let's start with all Expanded if there are few categories, or just manage it.
-  // Actually, let's auto-expand categories that have the selected item.
-  
+  // Estado para secciones de acordeón expandidas
+  // Inicializar con categorías que contengan el ítem seleccionado (si lo hay)
   const [expandedCategories, setExpandedCategories] = useState(() => {
-    // Initial state: Expand all categories that contain the selected item (if any)
-    // Or just expand all? "Todos" implies showing everything.
-    return categories.filter(c => c !== 'Todos');
+    // Estado inicial: Expandir todas las categorías que contengan el ítem seleccionado (si existe)
+    // O simplemente expandir todas? "Todos" implica mostrar todo.
+    return categories.filter((c) => c !== "Todos");
   });
 
   const toggleCategory = (category) => {
-    setExpandedCategories(prev => 
-      prev.includes(category) 
-        ? prev.filter(c => c !== category)
-        : [...prev, category]
+    setExpandedCategories((prev) =>
+      prev.includes(category)
+        ? prev.filter((c) => c !== category)
+        : [...prev, category],
     );
   };
 
-  // Group items by category
+  // Agrupar ítems por categoría
   const groupedItems = useMemo(() => {
     const groups = {};
-    // Initialize groups based on available categories (excluding 'Todos')
-    categories.filter(c => c !== 'Todos').forEach(cat => {
-      groups[cat] = [];
-    });
-    
-    // Fill groups with filtered items
-    filteredItems.forEach(item => {
+    // Inicializar grupos basados en categorías disponibles (excluyendo 'Todos')
+    categories
+      .filter((c) => c !== "Todos")
+      .forEach((cat) => {
+        groups[cat] = [];
+      });
+
+    // Llenar grupos con ítems filtrados
+    filteredItems.forEach((item) => {
       if (groups[item.category]) {
         groups[item.category].push(item);
       }
@@ -53,26 +55,35 @@ export const Sidebar = ({
 
   return (
     <>
-      {/* Overlay for mobile */}
+      {/* Capa superpuesta para móviles */}
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/20 backdrop-blur-sm z-20 lg:hidden"
           onClick={onClose}
         />
       )}
 
-      <div className={`
+      <div
+        className={`
         fixed inset-y-0 left-0 z-30 w-80 bg-gray-50/50 border-r border-gray-200 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static flex flex-col
-        ${isOpen ? 'translate-x-0' : '-translate-x-full'}
-      `}>
-        {/* Header */}
+        ${isOpen ? "translate-x-0" : "-translate-x-full"}
+      `}
+      >
+        {/* Encabezado */}
         <div className="p-6 border-b border-gray-200 bg-white/50 backdrop-blur-md">
           <div className="flex items-center gap-3 mb-6 text-gray-900">
             <div className="p-2 bg-blue-600 rounded-lg text-white shadow-lg shadow-blue-600/20">
               <BookOpen size={24} />
             </div>
             <div>
-              <h1 className="font-bold text-xl tracking-tight">React Stack</h1>
+              <div className="flex items-center gap-2">
+                <h1 className="font-bold text-xl tracking-tight">
+                  React Stack
+                </h1>
+                <span className="text-xs font-mono text-gray-500 pt-1">
+                  v.{pkg.version}
+                </span>
+              </div>
               <span className="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">
                 2026 Edition
               </span>
@@ -80,7 +91,10 @@ export const Sidebar = ({
           </div>
 
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+            <Search
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+              size={18}
+            />
             <input
               type="text"
               placeholder="Buscar tecnología..."
@@ -91,7 +105,7 @@ export const Sidebar = ({
           </div>
         </div>
 
-        {/* List with Accordion */}
+        {/* Lista con Acordeón */}
         <div className="flex-1 overflow-y-auto p-4 space-y-2 custom-scrollbar">
           <style>{`
             .custom-scrollbar::-webkit-scrollbar {
@@ -110,7 +124,7 @@ export const Sidebar = ({
           `}</style>
 
           {Object.entries(groupedItems).map(([category, items]) => {
-            // Skip empty categories if searching, or keep them? 
+            // Skip empty categories if searching, or keep them?
             // If items is empty and we have a search term, probably hide the category.
             if (items.length === 0 && searchTerm) return null;
             if (items.length === 0) return null; // Hide empty categories always? Or show empty state? Let's hide empty.
@@ -124,13 +138,20 @@ export const Sidebar = ({
                   className="w-full flex items-center justify-between p-2 text-sm font-semibold text-gray-500 hover:text-blue-600 transition-colors group"
                 >
                   <div className="flex items-center gap-2">
-                    <FolderOpen size={16} className={isExpanded ? 'text-blue-500' : 'text-gray-400'} />
+                    <FolderOpen
+                      size={16}
+                      className={isExpanded ? "text-blue-500" : "text-gray-400"}
+                    />
                     <span>{category}</span>
                     <span className="bg-gray-100 text-gray-500 text-[10px] px-1.5 py-0.5 rounded-full group-hover:bg-blue-50 group-hover:text-blue-600">
                       {items.length}
                     </span>
                   </div>
-                  {isExpanded ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                  {isExpanded ? (
+                    <ChevronDown size={16} />
+                  ) : (
+                    <ChevronRight size={16} />
+                  )}
                 </button>
 
                 {isExpanded && (
@@ -144,18 +165,24 @@ export const Sidebar = ({
                           onClick={() => onSelect(item.id)}
                           className={`
                             w-full text-left p-2.5 rounded-lg transition-all duration-200 flex items-center gap-3
-                            ${isSelected 
-                              ? 'bg-white shadow-sm border border-blue-100 text-blue-700' 
-                              : 'hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-100 text-gray-600'}
+                            ${
+                              isSelected
+                                ? "bg-white shadow-sm border border-blue-100 text-blue-700"
+                                : "hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-100 text-gray-600"
+                            }
                           `}
                         >
-                          <div className={`
+                          <div
+                            className={`
                             p-1.5 rounded-md transition-colors
-                            ${isSelected ? 'bg-blue-50 text-blue-600' : 'bg-gray-100 text-gray-400'}
-                          `}>
+                            ${isSelected ? "bg-blue-50 text-blue-600" : "bg-gray-100 text-gray-400"}
+                          `}
+                          >
                             <Icon size={16} />
                           </div>
-                          <span className="text-sm font-medium truncate">{item.name}</span>
+                          <span className="text-sm font-medium truncate">
+                            {item.name}
+                          </span>
                         </button>
                       );
                     })}
@@ -170,8 +197,12 @@ export const Sidebar = ({
               <div className="bg-gray-100 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3 text-gray-400">
                 <Search size={20} />
               </div>
-              <p className="text-sm text-gray-500 font-medium">No se encontraron resultados</p>
-              <p className="text-xs text-gray-400 mt-1">Prueba con otro término</p>
+              <p className="text-sm text-gray-500 font-medium">
+                No se encontraron resultados
+              </p>
+              <p className="text-xs text-gray-400 mt-1">
+                Prueba con otro término
+              </p>
             </div>
           )}
         </div>

@@ -1,9 +1,9 @@
-import { useState, useMemo } from 'react';
-import { technologies } from '../data/technologies';
+import { useState, useMemo } from "react";
+import { technologies } from "../data/technologies";
 
 /**
- * Custom hook to manage technology selection and filtering
- * @returns {Object} - State and handlers for tech selection
+ * Hook personalizado para gestionar la selección y filtrado de tecnologías
+ * @returns {Object} - Estado y manejadores para selección de tecnologías
  */
 export const useTechSelection = () => {
   const [selectedId, setSelectedId] = useState(() => {
@@ -13,30 +13,35 @@ export const useTechSelection = () => {
     }
     return null;
   });
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('Todos');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // Derive categories from data
+  // Derivar categorías de los datos
   const categories = useMemo(() => {
-    const cats = ['Todos', ...new Set(technologies.map(t => t.category))];
+    const cats = ["Todos", ...new Set(technologies.map((t) => t.category))];
     return cats;
   }, []);
 
-  // Filter items
+  // Filtrar ítems
   const filteredItems = useMemo(() => {
-    return technologies.filter(item => {
-      const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                            item.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                            item.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
-      const matchesCategory = selectedCategory === 'Todos' || item.category === selectedCategory;
+    return technologies.filter((item) => {
+      const matchesSearch =
+        item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.tags.some((tag) =>
+          tag.toLowerCase().includes(searchTerm.toLowerCase()),
+        );
+      const matchesCategory =
+        selectedCategory === "Todos" || item.category === selectedCategory;
       return matchesSearch && matchesCategory;
     });
   }, [searchTerm, selectedCategory]);
 
-  const activeItem = useMemo(() => 
-    technologies.find(t => t.id === selectedId) || null, 
-  [selectedId]);
+  const activeItem = useMemo(
+    () => technologies.find((t) => t.id === selectedId) || null,
+    [selectedId],
+  );
 
   return {
     selectedId,
@@ -49,6 +54,6 @@ export const useTechSelection = () => {
     setIsSidebarOpen,
     categories,
     filteredItems,
-    activeItem
+    activeItem,
   };
 };

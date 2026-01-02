@@ -1,8 +1,7 @@
-import React from 'react';
-import { useTechSelection } from './hooks/useTechSelection';
-import { Sidebar } from './components/layout/Sidebar';
-import { MobileHeader } from './components/layout/MobileHeader';
-import { TechDetail } from './components/features/TechDetail';
+import { useTechSelection } from "./hooks/useTechSelection";
+import { Sidebar } from "./components/layout/Sidebar";
+import { MobileHeader } from "./components/layout/MobileHeader";
+import { TechDetail } from "./components/features/TechDetail";
 
 function App() {
   const {
@@ -10,21 +9,18 @@ function App() {
     setSelectedId,
     searchTerm,
     setSearchTerm,
-    selectedCategory,
-    setSelectedCategory,
     isSidebarOpen,
     setIsSidebarOpen,
     categories,
     filteredItems,
-    activeItem
+    activeItem,
   } = useTechSelection();
 
   return (
     <div className="flex flex-col lg:flex-row h-screen bg-gray-50 font-sans text-gray-900 overflow-hidden">
-      
       <MobileHeader onMenuClick={() => setIsSidebarOpen(true)} />
 
-      <Sidebar 
+      <Sidebar
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         categories={categories}
@@ -39,12 +35,11 @@ function App() {
       />
 
       <main className="flex-1 h-full overflow-hidden relative w-full">
-        <TechDetail 
-          activeItem={activeItem} 
+        <TechDetail
+          activeItem={activeItem}
           onClose={() => setSelectedId(null)}
         />
       </main>
-
     </div>
   );
 }

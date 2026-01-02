@@ -1,74 +1,60 @@
-import React, { useState } from 'react';
-import { Check, Copy } from 'lucide-react';
+import { useState } from "react";
+import { Copy, Check } from "lucide-react";
 
-export const InstallCommand = ({ cmd }) => {
+export function InstallCommand({ command }) {
   const [copied, setCopied] = useState(false);
 
-  const handleCopy = async (e) => {
-    // Prevent default behavior if needed, though mostly relevant for links/forms
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-
-    if (!cmd) return;
-
+  const copyToClipboard = async (e) => {
+    e.stopPropagation();
     try {
-      // Try Modern Async API
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        await navigator.clipboard.writeText(cmd);
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(command);
         setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
       } else {
-        throw new Error('Clipboard API not available');
-      }
-    } catch (err) {
-      // Fallback for older browsers or non-secure contexts
-      try {
+        // Fallback for non-secure contexts
         const textArea = document.createElement("textarea");
-        textArea.value = cmd;
-        
-        // Ensure it's not visible but part of DOM
+        textArea.value = command;
         textArea.style.position = "fixed";
         textArea.style.left = "-9999px";
         textArea.style.top = "0";
         document.body.appendChild(textArea);
-        
         textArea.focus();
         textArea.select();
-        
-        const successful = document.execCommand('copy');
-        document.body.removeChild(textArea);
-        
-        if (successful) {
+        try {
+          document.execCommand("copy");
           setCopied(true);
-        } else {
-          console.error('Fallback copy failed');
+          setTimeout(() => setCopied(false), 2000);
+        } catch (err) {
+          console.error("Fallback: Oops, unable to copy", err);
         }
-      } catch (fallbackErr) {
-        console.error('Failed to copy', fallbackErr);
+        document.body.removeChild(textArea);
       }
+    } catch (err) {
+      console.error("Failed to copy:", err);
     }
-
-    // Reset copied state
-    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <div 
+    <div
       className="bg-gray-900 rounded-lg p-3 flex items-center justify-between group cursor-pointer hover:bg-gray-800 transition-colors relative"
-      onClick={handleCopy}
+      onClick={copyToClipboard}
       title="Click para copiar"
     >
       <code className="text-gray-100 font-mono text-sm overflow-x-auto whitespace-nowrap mr-4 no-scrollbar select-all">
-        {cmd}
+        {command}
       </code>
-      <button 
+      <button
         type="button"
         className="text-gray-400 hover:text-white transition-colors p-1 flex-shrink-0"
         aria-label="Copiar comando"
       >
-        {copied ? <Check size={16} className="text-green-400" /> : <Copy size={16} />}
+        {copied ? (
+          <Check size={16} className="text-green-400" />
+        ) : (
+          <Copy size={16} />
+        )}
       </button>
     </div>
   );
-};
+}
