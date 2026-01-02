@@ -2,17 +2,21 @@ import { ExternalLink, X, BookOpen } from "lucide-react";
 import { Badge } from "../ui/Badge";
 import { InstallCommand } from "./InstallCommand";
 import { AISection } from "./AISection";
+import { Footer } from "../layout/Footer";
 
 export const TechDetail = ({ activeItem, onClose }) => {
   if (!activeItem) {
     return (
-      <div className="hidden lg:flex flex-1 items-center justify-center bg-gray-50/50 text-gray-400 p-8 text-center">
-        <div>
-          <div className="w-16 h-16 bg-gray-100 rounded-2xl mx-auto mb-4 flex items-center justify-center">
-            <div className="w-8 h-8 border-2 border-gray-300 rounded-full" />
+      <div className="hidden lg:flex flex-1 flex-col h-full bg-gray-50/50">
+        <div className="flex-1 flex items-center justify-center text-gray-400 p-8 text-center">
+          <div>
+            <div className="w-16 h-16 bg-gray-100 rounded-2xl mx-auto mb-4 flex items-center justify-center">
+              <div className="w-8 h-8 border-2 border-gray-300 rounded-full" />
+            </div>
+            <p>Selecciona una tecnología para ver los detalles</p>
           </div>
-          <p>Selecciona una tecnología para ver los detalles</p>
         </div>
+        <Footer />
       </div>
     );
   }
@@ -20,7 +24,7 @@ export const TechDetail = ({ activeItem, onClose }) => {
   const Icon = activeItem.icon;
 
   return (
-    <div className="flex-1 overflow-y-auto bg-white h-full relative animate-in fade-in duration-300">
+    <div className="flex-1 overflow-y-auto bg-white h-full relative animate-in fade-in duration-300 flex flex-col">
       {/* Botón Cerrar en Móvil */}
       <button
         onClick={onClose}
@@ -125,9 +129,11 @@ export const TechDetail = ({ activeItem, onClose }) => {
       </div>
 
       {/* Sección de IA y Contenido */}
-      <div className="max-w-3xl mx-auto px-6 py-6">
+      <div className="max-w-3xl mx-auto px-6 py-6 flex-1 w-full">
         <AISection key={activeItem.id} selectedTech={activeItem} />
       </div>
+
+      <Footer />
     </div>
   );
 };
