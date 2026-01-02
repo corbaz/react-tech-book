@@ -2,6 +2,7 @@ import { useTechSelection } from "./hooks/useTechSelection";
 import { Sidebar } from "./components/layout/Sidebar";
 import { MobileHeader } from "./components/layout/MobileHeader";
 import { TechDetail } from "./components/features/TechDetail";
+import { ErrorBoundary } from "./components/ui/ErrorBoundary";
 
 function App() {
   const {
@@ -35,10 +36,12 @@ function App() {
       />
 
       <main className="flex-1 h-full overflow-hidden relative w-full">
-        <TechDetail
-          activeItem={activeItem}
-          onClose={() => setSelectedId(null)}
-        />
+        <ErrorBoundary>
+          <TechDetail
+            activeItem={activeItem}
+            onClose={() => setSelectedId(null)}
+          />
+        </ErrorBoundary>
       </main>
     </div>
   );

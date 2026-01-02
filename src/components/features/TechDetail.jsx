@@ -1,4 +1,4 @@
-import { ExternalLink, X } from "lucide-react";
+import { ExternalLink, X, BookOpen } from "lucide-react";
 import { Badge } from "../ui/Badge";
 import { InstallCommand } from "./InstallCommand";
 import { AISection } from "./AISection";
@@ -32,7 +32,7 @@ export const TechDetail = ({ activeItem, onClose }) => {
       {/* Hero Header */}
       <div className="bg-white border-b border-gray-100 p-8 pb-10">
         <div className="max-w-3xl mx-auto">
-          <div className="flex items-start justify-between mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-6">
             <div className="flex gap-4">
               <div className="p-3 bg-blue-50 rounded-xl text-blue-600 h-fit">
                 <Icon size={32} />
@@ -53,15 +53,29 @@ export const TechDetail = ({ activeItem, onClose }) => {
                 </div>
               </div>
             </div>
-            <a
-              href={activeItem.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden sm:flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-all shadow-sm hover:shadow text-sm font-medium"
-            >
-              Website
-              <ExternalLink size={16} />
-            </a>
+
+            <div className="flex gap-2 w-full sm:w-auto">
+              {activeItem.docsUrl && (
+                <a
+                  href={activeItem.docsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 sm:flex-none justify-center items-center gap-2 px-4 py-2 bg-white text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-all shadow-sm hover:shadow text-sm font-medium"
+                >
+                  <BookOpen size={16} />
+                  Docs
+                </a>
+              )}
+              <a
+                href={activeItem.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 sm:flex-none justify-center items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-all shadow-sm hover:shadow text-sm font-medium"
+              >
+                Website
+                <ExternalLink size={16} />
+              </a>
+            </div>
           </div>
 
           <p className="text-lg text-gray-600 leading-relaxed mb-8">

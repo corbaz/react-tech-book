@@ -19,6 +19,7 @@ export const useTechSelection = () => {
 
   // Derivar categorías de los datos
   const categories = useMemo(() => {
+    // Obtenemos las categorías únicas de todas las tecnologías
     const cats = ["Todos", ...new Set(technologies.map((t) => t.category))];
     return cats;
   }, []);

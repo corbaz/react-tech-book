@@ -19,9 +19,23 @@ export const technologies = [
     description:
       "Colección de componentes reutilizables construidos sobre Radix UI y Tailwind CSS. No es una librería de componentes tradicional, sino código que copias y pegas en tu proyecto, permitiendo control total y personalización sin límites.",
     website: "https://ui.shadcn.com",
+    docsUrl: "https://ui.shadcn.com/docs",
     installCmd: "npx shadcn@latest init",
     tags: ["UI", "Headless", "Tailwind"],
     githubRepo: "https://github.com/shadcn-ui/ui",
+  },
+  {
+    id: "tailwindcss",
+    name: "Tailwind CSS",
+    category: "UI & Componentes",
+    icon: Layout,
+    description:
+      "Un framework CSS utility-first repleto de clases como flex, pt-4, text-center y rotate-90 que pueden componerse para construir cualquier diseño, directamente en tu maquetado.",
+    website: "https://tailwindcss.com",
+    docsUrl: "https://tailwindcss.com/docs",
+    installCmd: "npm install tailwindcss @tailwindcss/vite",
+    tags: ["CSS", "Utility-first", "Framework"],
+    githubRepo: "https://github.com/tailwindlabs/tailwindcss",
   },
   {
     id: "framer",
@@ -31,6 +45,7 @@ export const technologies = [
     description:
       "La biblioteca de animación estándar de facto para React. Permite animaciones declarativas complejas, gestos y transiciones de diseño compartido con una API simple y potente.",
     website: "https://motion.dev",
+    docsUrl: "https://motion.dev/docs",
     installCmd: "npm install framer-motion",
     tags: ["Animación", "Gestos", "DX"],
     githubRepo: "https://github.com/motiondivision/motion",
@@ -43,6 +58,7 @@ export const technologies = [
     description:
       "Primitivas de UI sin estilos (Headless) y accesibles para construir sistemas de diseño de alta calidad. Maneja la lógica difícil de accesibilidad WAI-ARIA por ti.",
     website: "https://www.radix-ui.com",
+    docsUrl: "https://www.radix-ui.com/primitives/docs/overview/introduction",
     installCmd: "npm install @radix-ui/react-popover",
     tags: ["Accesibilidad", "Headless", "Primitivas"],
     githubRepo: "https://github.com/radix-ui/primitives",
@@ -55,6 +71,7 @@ export const technologies = [
     description:
       'Biblioteca "headless" para construir tablas y grillas de datos potentes. Ofrece ordenamiento, filtrado, agrupación y paginación sin imponer estilos visuales.',
     website: "https://tanstack.com/table",
+    docsUrl: "https://tanstack.com/table/latest/docs/introduction",
     installCmd: "npm install @tanstack/react-table",
     tags: ["Tablas", "Headless", "Datos"],
     githubRepo: "https://github.com/TanStack/table",
@@ -67,6 +84,7 @@ export const technologies = [
     description:
       "Componente de paleta de comandos (Command Palette) rápido, componible y sin estilos. Ideal para interfaces tipo Spotlight o menús de comandos estilo Ctrl+K.",
     website: "https://cmdk.paco.me",
+    docsUrl: "https://github.com/pacocoursey/cmdk#readme",
     installCmd: "npm install cmdk",
     tags: ["Command Palette", "Accesibilidad"],
     githubRepo: "https://github.com/pacocoursey/cmdk",
@@ -79,6 +97,7 @@ export const technologies = [
     description:
       "Kit de herramientas moderno y ligero para drag & drop en React. Se centra en el rendimiento, accesibilidad y extensibilidad, con soporte para múltiples sensores de entrada.",
     website: "https://dndkit.com",
+    docsUrl: "https://docs.dndkit.com",
     installCmd: "npm install @dnd-kit/core",
     tags: ["Drag&Drop", "Interacción"],
     githubRepo: "https://github.com/clauderic/dnd-kit",
@@ -93,6 +112,7 @@ export const technologies = [
     description:
       "Gestión de formularios performante y flexible con validación fácil. Minimiza los re-renders y ofrece una mejor experiencia de usuario y desarrollador comparado con formularios controlados tradicionales.",
     website: "https://react-hook-form.com",
+    docsUrl: "https://react-hook-form.com/get-started",
     installCmd: "npm install react-hook-form",
     tags: ["Formularios", "Performance", "Hooks"],
     githubRepo: "https://github.com/react-hook-form/react-hook-form",
@@ -105,6 +125,7 @@ export const technologies = [
     description:
       "Validación de esquemas TypeScript-first con inferencia estática de tipos. Elimina la duplicación de declaraciones de tipos y valida datos en tiempo de ejecución tanto en cliente como en servidor.",
     website: "https://zod.dev",
+    docsUrl: "https://zod.dev/?id=introduction",
     installCmd: "npm install zod",
     tags: ["Validación", "TypeScript", "Esquemas"],
     githubRepo: "https://github.com/colinhacks/zod",
@@ -117,6 +138,7 @@ export const technologies = [
     description:
       'Solución de gestión de estado pequeña, rápida y escalable. Utiliza hooks simplificados sin el boilerplate de Redux y resuelve problemas comunes como el "zombie child problem".',
     website: "https://zustand-demo.pmnd.rs",
+    docsUrl: "https://zustand.docs.pmnd.rs/getting-started/introduction",
     installCmd: "npm install zustand",
     tags: ["State Management", "Hooks", "Minimalista"],
     githubRepo: "https://github.com/pmndrs/zustand",
@@ -129,12 +151,26 @@ export const technologies = [
     description:
       "Gestión de estado segura (Type-safe) en los parámetros de búsqueda de la URL (Query Params). Permite sincronizar el estado de la UI con la URL para compartir y persistir vistas.",
     website: "https://nuqs.47ng.com",
+    docsUrl: "https://nuqs.47ng.com/docs",
     installCmd: "npm install nuqs",
     tags: ["URL State", "Query Params", "UX"],
     githubRepo: "https://github.com/47ng/nuqs",
   },
 
   // --- DATA & BACKEND ---
+  {
+    id: "sqlite",
+    name: "SQLite",
+    category: "Datos & Backend",
+    icon: Database,
+    description:
+      "Una biblioteca en proceso que implementa un motor de base de datos SQL transaccional, autónomo, sin servidor y sin configuración.",
+    website: "https://www.sqlite.org",
+    docsUrl: "https://www.sqlite.org/docs.html",
+    installCmd: "npm install sqlite3",
+    tags: ["Database", "SQL", "Embedded"],
+    githubRepo: "https://github.com/sqlite/sqlite",
+  },
   {
     id: "trpc",
     name: "tRPC",
@@ -143,6 +179,7 @@ export const technologies = [
     description:
       "Permite construir APIs seguras de extremo a extremo sin esquemas ni generación de código. Comparte tipos de TypeScript directamente entre tu cliente y servidor.",
     website: "https://trpc.io",
+    docsUrl: "https://trpc.io/docs",
     installCmd: "npm install @trpc/server @trpc/client",
     tags: ["API", "TypeScript", "Fullstack"],
     githubRepo: "https://github.com/trpc/trpc",
@@ -155,6 +192,7 @@ export const technologies = [
     description:
       "Gestión de estado asíncrono potente para TS/JS. Maneja caching, sincronización, y actualización del estado del servidor en tus aplicaciones React.",
     website: "https://tanstack.com/query",
+    docsUrl: "https://tanstack.com/query/latest/docs/framework/react/overview",
     installCmd: "npm i @tanstack/react-query",
     tags: ["Async State", "Cache", "Data Fetching"],
     githubRepo: "https://github.com/TanStack/query",
@@ -167,6 +205,7 @@ export const technologies = [
     description:
       "ORM de próxima generación para Node.js y TypeScript. Ofrece un modelo de datos declarativo, migraciones automatizadas y un cliente con autocompletado y seguridad de tipos.",
     website: "https://www.prisma.io",
+    docsUrl: "https://www.prisma.io/docs",
     installCmd: "npm install prisma --save-dev",
     tags: ["ORM", "Base de Datos", "SQL"],
     githubRepo: "https://github.com/prisma/prisma",
@@ -179,6 +218,7 @@ export const technologies = [
     description:
       'ORM ligero y "SQL-like" para TypeScript. Diseñado para tener cero sobrecarga en tiempo de ejecución y ofrecer una experiencia de desarrollo cercana a escribir SQL puro pero tipado.',
     website: "https://orm.drizzle.team",
+    docsUrl: "https://orm.drizzle.team/docs/overview",
     installCmd: "npm install drizzle-orm",
     tags: ["ORM", "SQL", "Ligero"],
     githubRepo: "https://github.com/drizzle-team/drizzle-orm",
@@ -191,6 +231,7 @@ export const technologies = [
     description:
       "Framework web ultrarrápido, pequeño y ligero para los bordes (Edges). Funciona en cualquier runtime de JavaScript: Cloudflare Workers, Fastly, Deno, Bun, Lagon, AWS Lambda y Node.js.",
     website: "https://hono.dev",
+    docsUrl: "https://hono.dev/docs",
     installCmd: "npm install hono",
     tags: ["Backend", "Edge", "Performance"],
     githubRepo: "https://github.com/honojs/hono",
@@ -203,6 +244,7 @@ export const technologies = [
     description:
       "Alternativa Open Source a Firebase. Proporciona una base de datos Postgres dedicada, autenticación, APIs instantáneas, funciones Edge y almacenamiento de archivos.",
     website: "https://supabase.com",
+    docsUrl: "https://supabase.com/docs",
     installCmd: "npm install @supabase/supabase-js",
     tags: ["BaaS", "Postgres", "Auth"],
     githubRepo: "https://github.com/supabase/supabase",
@@ -217,6 +259,7 @@ export const technologies = [
     description:
       "Biblioteca para construir interfaces de usuario impulsadas por IA. Facilita la integración de LLMs, streaming de texto y creación de chats interactivos.",
     website: "https://sdk.vercel.ai",
+    docsUrl: "https://sdk.vercel.ai/docs",
     installCmd: "npm install ai",
     tags: ["IA", "LLM", "Streaming"],
     githubRepo: "https://github.com/vercel/ai",
@@ -229,6 +272,7 @@ export const technologies = [
     description:
       "API de correo electrónico para desarrolladores. Permite diseñar correos transaccionales utilizando componentes de React en lugar de HTML/CSS antiguo.",
     website: "https://resend.com",
+    docsUrl: "https://resend.com/docs/introduction",
     installCmd: "npm install resend",
     tags: ["Email", "React Email", "API"],
     githubRepo: "https://github.com/resend/react-email",
@@ -241,6 +285,7 @@ export const technologies = [
     description:
       "Plataforma de pagos unificada para desarrolladores. Maneja suscripciones, pagos únicos e impuestos (Merchant of Record), ideal para productos digitales y SaaS.",
     website: "https://polar.sh",
+    docsUrl: "https://docs.polar.sh",
     installCmd: "npm install @polar-sh/sdk",
     tags: ["Pagos", "SaaS", "Monetización"],
     githubRepo: "https://github.com/polarsource/polar",
@@ -253,6 +298,7 @@ export const technologies = [
     description:
       "Generador de documentación de API moderna e interactiva desde especificaciones OpenAPI/Swagger. Ofrece una UI limpia y probadores de peticiones integrados.",
     website: "https://scalar.com",
+    docsUrl: "https://guides.scalar.com",
     installCmd: "npm install @scalar/api-reference",
     tags: ["Docs", "API", "OpenAPI"],
     githubRepo: "https://github.com/scalar/scalar",
@@ -265,6 +311,7 @@ export const technologies = [
     description:
       "Plataforma de análisis de producto todo en uno. Ofrece análisis de embudos, grabaciones de sesión, feature flags y experimentación A/B. Puede ser auto-alojada.",
     website: "https://posthog.com",
+    docsUrl: "https://posthog.com/docs",
     installCmd: "npm install posthog-js",
     tags: ["Analíticas", "Product", "Testing"],
     githubRepo: "https://github.com/PostHog/posthog",
@@ -277,6 +324,7 @@ export const technologies = [
     description:
       "Alternativa autohospedable a Vercel/Heroku/Netlify. Te permite desplegar aplicaciones, bases de datos y servicios en tu propio VPS con una interfaz simple.",
     website: "https://coolify.io",
+    docsUrl: "https://coolify.io/docs",
     installCmd: "curl -fsSL https://cdn.coollabs.io/coolify/install.sh | bash",
     tags: ["DevOps", "Self-hosted", "Deploy"],
     githubRepo: "https://github.com/coollabsio/coolify",
