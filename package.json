@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build",
-    "deploy": "surge dist --domain jcc-book-react.surge.sh",
     "lint": "eslint .",
     "format": "prettier --write .",
+    "build": "vite build",
+    "deploy": "surge dist --domain jcc-book-react.surge.sh",
     "preview": "vite preview --host"
   },
   "dependencies": {
