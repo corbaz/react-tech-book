@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Bot, Send, Lightbulb } from 'lucide-react';
+import { Sparkles, Bot, Send, Lightbulb, Copy, Check } from 'lucide-react';
 import { useGemini } from '../../hooks/useGemini';
 
 export const AISection = ({ activeItem }) => {
   const [prompt, setPrompt] = useState('');
+  const [copied, setCopied] = useState(false);
   const { result, loading, error, generate, setResult, setError } = useGemini();
 
   // Reset AI state when technology changes
@@ -11,6 +12,7 @@ export const AISection = ({ activeItem }) => {
     setPrompt('');
     setResult('');
     setError(null);
+    setCopied(false);
   }, [activeItem.id, setResult, setError]);
 
   const handleConsult = (e) => {
@@ -26,6 +28,32 @@ export const AISection = ({ activeItem }) => {
     Responde de forma concisa, técnica y útil para un desarrollador React.`;
     
     generate(fullPrompt);
+  };
+
+  const handleCopy = async () => {
+    if (!result) return;
+
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(result);
+        setCopied(true);
+      } else {
+         // Fallback
+         const textArea = document.createElement("textarea");
+         textArea.value = result;
+         textArea.style.position = "fixed";
+         textArea.style.left = "-9999px";
+         document.body.appendChild(textArea);
+         textArea.focus();
+         textArea.select();
+         document.execCommand('copy');
+         document.body.removeChild(textArea);
+         setCopied(true);
+      }
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy', err);
+    }
   };
 
   const suggestions = [
@@ -68,7 +96,7 @@ export const AISection = ({ activeItem }) => {
 
         {/* Response Area - Full Width */}
         {(loading || result || error) && (
-          <div className="bg-white rounded-lg p-4 border border-blue-100 mb-4 shadow-sm animate-in fade-in slide-in-from-bottom-2">
+          <div className="bg-white rounded-lg p-4 border border-blue-100 mb-4 shadow-sm animate-in fade-in slide-in-from-bottom-2 relative group">
             {loading ? (
               <div className="flex items-center gap-2 text-sm text-gray-500">
                 <div className="animate-spin rounded-full h-4 w-4 border-2 border-blue-500 border-t-transparent"></div>
@@ -79,11 +107,20 @@ export const AISection = ({ activeItem }) => {
                 Error: {error}
               </div>
             ) : (
-              <div className="prose prose-sm max-w-none text-gray-700">
-                {result.split('\n').map((line, i) => (
-                  <p key={i} className="mb-2 last:mb-0">{line}</p>
-                ))}
-              </div>
+              <>
+                <button 
+                  onClick={handleCopy}
+                  className="absolute top-2 right-2 p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-all opacity-0 group-hover:opacity-100 focus:opacity-100"
+                  title="Copiar respuesta"
+                >
+                  {copied ? <Check size={16} className="text-green-500" /> : <Copy size={16} />}
+                </button>
+                <div className="prose prose-sm max-w-none text-gray-700 pr-8">
+                  {result.split('\n').map((line, i) => (
+                    <p key={i} className="mb-2 last:mb-0">{line}</p>
+                  ))}
+                </div>
+              </>
             )}
           </div>
         )}
