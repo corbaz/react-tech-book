@@ -14,10 +14,25 @@ import {
   MessageSquare,
   Zap,
   Code,
+  FileText,
+  Image,
 } from "lucide-react";
 
 export const technologies = [
   // --- UI & UX ---
+  {
+    id: "lucide-react",
+    name: "Lucide React",
+    category: "UI & Componentes",
+    icon: Image,
+    description:
+      "Biblioteca de iconos SVG hermosa, consistente y ligera. Es el estándar moderno para iconos en React, ofreciendo personalización total de tamaño, color y grosor de trazo.",
+    website: "https://lucide.dev",
+    docsUrl: "https://lucide.dev/guide/packages/lucide-react",
+    installCmd: "npm install lucide-react",
+    tags: ["Iconos", "SVG", "UI"],
+    githubRepo: "https://github.com/lucide-icons/lucide",
+  },
   {
     id: "shadcn",
     name: "Shadcn UI",
@@ -108,6 +123,32 @@ export const technologies = [
     installCmd: "npm install @dnd-kit/core",
     tags: ["Drag&Drop", "Interacción"],
     githubRepo: "https://github.com/clauderic/dnd-kit",
+  },
+  {
+    id: "react-markdown",
+    name: "React Markdown",
+    category: "UI & Componentes",
+    icon: FileText,
+    description:
+      "Componente de React para renderizar Markdown de forma segura. Permite transformar contenido de texto plano en elementos ricos de React sin usar 'dangerouslySetInnerHTML'.",
+    website: "https://github.com/remarkjs/react-markdown",
+    docsUrl: "https://github.com/remarkjs/react-markdown#readme",
+    installCmd: "npm install react-markdown",
+    tags: ["Markdown", "Content", "Renderer"],
+    githubRepo: "https://github.com/remarkjs/react-markdown",
+  },
+  {
+    id: "remark-gfm",
+    name: "Remark GFM",
+    category: "UI & Componentes",
+    icon: Wrench,
+    description:
+      "Plugin para remark que añade soporte para 'GitHub Flavored Markdown'. Habilita tablas, listas de tareas, autolinks y tachado en tu renderizado de Markdown.",
+    website: "https://github.com/remarkjs/remark-gfm",
+    docsUrl: "https://github.com/remarkjs/remark-gfm#readme",
+    installCmd: "npm install remark-gfm",
+    tags: ["Markdown", "Plugin", "GitHub Flavor"],
+    githubRepo: "https://github.com/remarkjs/remark-gfm",
   },
 
   // --- FORMS & STATE ---
