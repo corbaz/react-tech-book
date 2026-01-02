@@ -75,12 +75,16 @@ const CodeBlock = ({ inline, className, children, ...props }) => {
           {copied ? (
             <>
               <Check size={14} className="text-green-400" />
-              <span className="text-xs font-medium text-green-400">Copiado</span>
+              <span className="text-xs font-medium text-green-400">
+                Copiado
+              </span>
             </>
           ) : (
             <>
               <Copy size={14} />
-              <span className="text-xs font-medium group-hover:text-white">Copiar</span>
+              <span className="text-xs font-medium group-hover:text-white">
+                Copiar
+              </span>
             </>
           )}
         </button>
@@ -147,7 +151,7 @@ export function AISection({ selectedTech }) {
   ];
 
   return (
-    <div className="mt-8 border-t border-gray-100 pt-8">
+    <div className="mt-0 border-t-0 pt-0">
       <div className="flex items-center gap-2 mb-4 text-blue-600">
         <Sparkles size={20} />
         <h3 className="font-semibold text-lg">Asistente AI</h3>
@@ -188,7 +192,9 @@ export function AISection({ selectedTech }) {
             {loading ? (
               <div className="flex items-center gap-3 text-gray-600 py-8 justify-center">
                 <div className="animate-spin rounded-full h-5 w-5 border-2 border-blue-600 border-t-transparent"></div>
-                <span className="font-medium">Analizando documentación y generando respuesta...</span>
+                <span className="font-medium">
+                  Analizando documentación y generando respuesta...
+                </span>
               </div>
             ) : error ? (
               <div className="p-4 bg-red-50 text-red-600 rounded-lg border border-red-100 flex items-center gap-2">
@@ -198,28 +204,88 @@ export function AISection({ selectedTech }) {
             ) : (
               <>
                 <div className="markdown-content text-gray-800 leading-relaxed">
-                  <ReactMarkdown 
+                  <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
                     components={{
-                      code: CodeBlock,
-                      h1: ({node, ...props}) => <h1 className="text-2xl font-bold text-gray-900 mt-6 mb-4 border-b border-gray-100 pb-2" {...props} />,
-                      h2: ({node, ...props}) => <h2 className="text-xl font-bold text-gray-800 mt-6 mb-3" {...props} />,
-                      h3: ({node, ...props}) => <h3 className="text-lg font-semibold text-gray-800 mt-4 mb-2" {...props} />,
-                      p: ({node, ...props}) => <p className="mb-4 text-base leading-7 text-gray-700" {...props} />,
-                      ul: ({node, ...props}) => <ul className="list-disc list-outside ml-6 mb-4 space-y-2 text-gray-700" {...props} />,
-                      ol: ({node, ...props}) => <ol className="list-decimal list-outside ml-6 mb-4 space-y-2 text-gray-700" {...props} />,
-                      li: ({node, ...props}) => <li className="pl-1" {...props} />,
-                      a: ({node, ...props}) => <a className="text-blue-600 hover:text-blue-800 font-medium underline decoration-blue-200 hover:decoration-blue-800 transition-all" target="_blank" rel="noopener noreferrer" {...props} />,
-                      blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-blue-500 pl-4 py-1 my-4 bg-blue-50/50 italic text-gray-700 rounded-r-lg" {...props} />,
-                      table: ({node, ...props}) => <div className="overflow-x-auto my-6 rounded-lg border border-gray-200"><table className="min-w-full divide-y divide-gray-200" {...props} /></div>,
-                      th: ({node, ...props}) => <th className="px-4 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" {...props} />,
-                      td: ({node, ...props}) => <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700 border-t border-gray-100" {...props} />,
+                      pre: (props) => <>{props.children}</>,
+                      code: (props) => <CodeBlock {...props} />,
+                      h1: (props) => (
+                        <h1
+                          className="text-2xl font-bold text-gray-900 mt-6 mb-4 border-b border-gray-100 pb-2"
+                          {...props}
+                        />
+                      ),
+                      h2: (props) => (
+                        <h2
+                          className="text-xl font-bold text-gray-800 mt-6 mb-3"
+                          {...props}
+                        />
+                      ),
+                      h3: (props) => (
+                        <h3
+                          className="text-lg font-semibold text-gray-800 mt-4 mb-2"
+                          {...props}
+                        />
+                      ),
+                      p: (props) => (
+                        <p
+                          className="mb-4 text-base leading-7 text-gray-700"
+                          {...props}
+                        />
+                      ),
+                      ul: (props) => (
+                        <ul
+                          className="list-disc list-outside ml-6 mb-4 space-y-2 text-gray-700"
+                          {...props}
+                        />
+                      ),
+                      ol: (props) => (
+                        <ol
+                          className="list-decimal list-outside ml-6 mb-4 space-y-2 text-gray-700"
+                          {...props}
+                        />
+                      ),
+                      li: (props) => <li className="pl-1" {...props} />,
+                      a: (props) => (
+                        <a
+                          className="text-blue-600 hover:text-blue-800 font-medium underline decoration-blue-200 hover:decoration-blue-800 transition-all"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          {...props}
+                        />
+                      ),
+                      blockquote: (props) => (
+                        <blockquote
+                          className="border-l-4 border-blue-500 pl-4 py-1 my-4 bg-blue-50/50 italic text-gray-700 rounded-r-lg"
+                          {...props}
+                        />
+                      ),
+                      table: (props) => (
+                        <div className="overflow-x-auto my-6 rounded-lg border border-gray-200">
+                          <table
+                            className="min-w-full divide-y divide-gray-200"
+                            {...props}
+                          />
+                        </div>
+                      ),
+                      th: (props) => (
+                        <th
+                          className="px-4 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          {...props}
+                        />
+                      ),
+                      td: (props) => (
+                        <td
+                          className="px-4 py-3 whitespace-nowrap text-sm text-gray-700 border-t border-gray-100"
+                          {...props}
+                        />
+                      ),
                     }}
                   >
                     {result}
                   </ReactMarkdown>
                 </div>
-                
+
                 {/* Botón de Copiar Respuesta Completa */}
                 <div className="flex justify-end mt-6 pt-4 border-t border-gray-100">
                   <button
@@ -230,7 +296,9 @@ export function AISection({ selectedTech }) {
                     {copied ? (
                       <>
                         <Check size={16} className="text-green-500" />
-                        <span className="text-green-600">Respuesta copiada</span>
+                        <span className="text-green-600">
+                          Respuesta copiada
+                        </span>
                       </>
                     ) : (
                       <>
