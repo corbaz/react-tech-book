@@ -15,4 +15,31 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Custom Scrollbar - Pro Blue UI */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #eff6ff; /* blue-50 */
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #60a5fa; /* blue-400 */
+    border-radius: 9999px;
+    border: 2px solid #eff6ff; /* blue-50 matches track */
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #2563eb; /* blue-600 */
+  }
+
+  /* Firefox support */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #60a5fa #eff6ff;
+  }
 }

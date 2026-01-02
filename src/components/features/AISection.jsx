@@ -8,7 +8,94 @@ import {
   Check,
   Trash2,
 } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { useGemini } from "../../hooks/useGemini";
+
+// Componente para bloques de código con botón de copiar y estilos mejorados
+const CodeBlock = ({ inline, className, children, ...props }) => {
+  const match = /language-(\w+)/.exec(className || "");
+  const language = match ? match[1] : "";
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    const textToCopy = String(children).replace(/\n$/, "");
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(textToCopy);
+        setCopied(true);
+      } else {
+        // Fallback
+        const textArea = document.createElement("textarea");
+        textArea.value = textToCopy;
+        textArea.style.position = "fixed";
+        textArea.style.left = "-9999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textArea);
+        setCopied(true);
+      }
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy", err);
+    }
+  };
+
+  if (inline) {
+    return (
+      <code
+        className="bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded-md font-mono text-sm border border-blue-100 align-middle"
+        {...props}
+      >
+        {children}
+      </code>
+    );
+  }
+
+  return (
+    <div className="relative my-6 rounded-xl overflow-hidden border border-gray-800 shadow-2xl bg-gray-900 group">
+      <div className="flex items-center justify-between bg-[#1f2937] px-4 py-2.5 border-b border-gray-700">
+        <div className="flex items-center gap-3">
+          <div className="flex gap-1.5">
+            <div className="w-2.5 h-2.5 rounded-full bg-red-500/80"></div>
+            <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80"></div>
+            <div className="w-2.5 h-2.5 rounded-full bg-green-500/80"></div>
+          </div>
+          <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">
+            {language || "Terminal"}
+          </span>
+        </div>
+        <button
+          onClick={handleCopy}
+          className="text-gray-400 hover:text-white transition-colors p-1.5 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 flex items-center gap-1.5"
+          title="Copiar código"
+        >
+          {copied ? (
+            <>
+              <Check size={14} className="text-green-400" />
+              <span className="text-xs font-medium text-green-400">Copiado</span>
+            </>
+          ) : (
+            <>
+              <Copy size={14} />
+              <span className="text-xs font-medium group-hover:text-white">Copiar</span>
+            </>
+          )}
+        </button>
+      </div>
+      <div className="p-5 overflow-x-auto bg-[#0d1117]">
+        <code
+          className="font-mono text-[13px] sm:text-sm text-gray-300 leading-relaxed block"
+          {...props}
+        >
+          {children}
+        </code>
+      </div>
+    </div>
+  );
+};
 
 export function AISection({ selectedTech }) {
   const [prompt, setPrompt] = useState("");
@@ -25,12 +112,13 @@ export function AISection({ selectedTech }) {
     
     Pregunta del usuario: ${prompt}
     
-    Responde de forma concisa, técnica y útil para un desarrollador React.`;
+    Responde de forma concisa, técnica y útil para un desarrollador React. 
+    Usa formato Markdown para resaltar código y conceptos clave.`;
 
     generateResponse(fullPrompt);
   };
 
-  const handleCopy = async () => {
+  const handleCopyResponse = async () => {
     if (!result) return;
 
     try {
@@ -38,13 +126,9 @@ export function AISection({ selectedTech }) {
         await navigator.clipboard.writeText(result);
         setCopied(true);
       } else {
-        // Alternativa (Fallback)
         const textArea = document.createElement("textarea");
         textArea.value = result;
-        textArea.style.position = "fixed";
-        textArea.style.left = "-9999px";
         document.body.appendChild(textArea);
-        textArea.focus();
         textArea.select();
         document.execCommand("copy");
         document.body.removeChild(textArea);
@@ -70,7 +154,7 @@ export function AISection({ selectedTech }) {
       </div>
 
       <div className="bg-blue-50/50 rounded-xl p-4 border border-blue-100">
-        {/* Encabezado: Icono + Texto en línea para ahorrar espacio vertical */}
+        {/* Encabezado: Icono + Texto en línea */}
         <div className="flex items-center gap-3 mb-4">
           <div className="bg-white p-1.5 rounded-lg shadow-sm">
             <Bot size={18} className="text-blue-600" />
@@ -100,50 +184,58 @@ export function AISection({ selectedTech }) {
 
         {/* Área de Respuesta - Ancho Completo */}
         {(loading || result || error) && (
-          <div className="bg-white rounded-lg p-4 border border-blue-100 mb-4 shadow-sm animate-in fade-in slide-in-from-bottom-2 relative group">
+          <div className="bg-white rounded-xl p-6 border border-blue-100 mb-6 shadow-sm animate-in fade-in slide-in-from-bottom-2 relative group">
             {loading ? (
-              <div className="flex items-center gap-2 text-sm text-gray-500">
-                <div className="animate-spin rounded-full h-4 w-4 border-2 border-blue-500 border-t-transparent"></div>
-                Analizando documentación...
+              <div className="flex items-center gap-3 text-gray-600 py-8 justify-center">
+                <div className="animate-spin rounded-full h-5 w-5 border-2 border-blue-600 border-t-transparent"></div>
+                <span className="font-medium">Analizando documentación y generando respuesta...</span>
               </div>
             ) : error ? (
-              <div className="text-sm text-red-500">Error: {error}</div>
+              <div className="p-4 bg-red-50 text-red-600 rounded-lg border border-red-100 flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-red-500"></div>
+                Error: {error}
+              </div>
             ) : (
               <>
-                <button
-                  onClick={handleCopy}
-                  className="absolute top-2 right-2 p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-all opacity-0 group-hover:opacity-100 focus:opacity-100"
-                  title="Copiar respuesta"
-                >
-                  {copied ? (
-                    <Check size={16} className="text-green-500" />
-                  ) : (
-                    <Copy size={16} />
-                  )}
-                </button>
-                <div className="prose prose-sm max-w-none text-gray-700 pr-8">
-                  {result.split("\n").map((line, i) => (
-                    <p key={i} className="mb-2 last:mb-0">
-                      {line}
-                    </p>
-                  ))}
+                <div className="markdown-content text-gray-800 leading-relaxed">
+                  <ReactMarkdown 
+                    remarkPlugins={[remarkGfm]}
+                    components={{
+                      code: CodeBlock,
+                      h1: ({node, ...props}) => <h1 className="text-2xl font-bold text-gray-900 mt-6 mb-4 border-b border-gray-100 pb-2" {...props} />,
+                      h2: ({node, ...props}) => <h2 className="text-xl font-bold text-gray-800 mt-6 mb-3" {...props} />,
+                      h3: ({node, ...props}) => <h3 className="text-lg font-semibold text-gray-800 mt-4 mb-2" {...props} />,
+                      p: ({node, ...props}) => <p className="mb-4 text-base leading-7 text-gray-700" {...props} />,
+                      ul: ({node, ...props}) => <ul className="list-disc list-outside ml-6 mb-4 space-y-2 text-gray-700" {...props} />,
+                      ol: ({node, ...props}) => <ol className="list-decimal list-outside ml-6 mb-4 space-y-2 text-gray-700" {...props} />,
+                      li: ({node, ...props}) => <li className="pl-1" {...props} />,
+                      a: ({node, ...props}) => <a className="text-blue-600 hover:text-blue-800 font-medium underline decoration-blue-200 hover:decoration-blue-800 transition-all" target="_blank" rel="noopener noreferrer" {...props} />,
+                      blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-blue-500 pl-4 py-1 my-4 bg-blue-50/50 italic text-gray-700 rounded-r-lg" {...props} />,
+                      table: ({node, ...props}) => <div className="overflow-x-auto my-6 rounded-lg border border-gray-200"><table className="min-w-full divide-y divide-gray-200" {...props} /></div>,
+                      th: ({node, ...props}) => <th className="px-4 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" {...props} />,
+                      td: ({node, ...props}) => <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700 border-t border-gray-100" {...props} />,
+                    }}
+                  >
+                    {result}
+                  </ReactMarkdown>
                 </div>
-                {/* Botón de Copiar Inferior */}
-                <div className="flex justify-end mt-4 pt-2 border-t border-gray-100">
+                
+                {/* Botón de Copiar Respuesta Completa */}
+                <div className="flex justify-end mt-6 pt-4 border-t border-gray-100">
                   <button
-                    onClick={handleCopy}
-                    className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                    title="Copiar respuesta"
+                    onClick={handleCopyResponse}
+                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors border border-transparent hover:border-blue-100"
+                    title="Copiar respuesta completa"
                   >
                     {copied ? (
                       <>
-                        <Check size={14} className="text-green-500" />
-                        <span className="text-green-600">Copiado</span>
+                        <Check size={16} className="text-green-500" />
+                        <span className="text-green-600">Respuesta copiada</span>
                       </>
                     ) : (
                       <>
-                        <Copy size={14} />
-                        <span>Copiar respuesta</span>
+                        <Copy size={16} />
+                        <span>Copiar respuesta completa</span>
                       </>
                     )}
                   </button>
@@ -160,25 +252,25 @@ export function AISection({ selectedTech }) {
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder={`Pregunta sobre ${selectedTech.name}...`}
-            className="w-full pl-4 pr-24 py-3 rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition-all text-sm"
+            className="w-full pl-4 pr-24 py-3.5 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all text-base shadow-sm"
           />
           <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
             {prompt && (
               <button
                 type="button"
                 onClick={() => setPrompt("")}
-                className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-md transition-colors"
+                className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
                 title="Borrar texto"
               >
-                <Trash2 size={16} />
+                <Trash2 size={18} />
               </button>
             )}
             <button
               type="submit"
               disabled={loading || !prompt.trim()}
-              className="p-1.5 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm hover:shadow active:scale-95"
             >
-              <Send size={16} />
+              <Send size={18} />
             </button>
           </div>
         </form>
