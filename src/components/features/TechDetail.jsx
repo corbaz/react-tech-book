@@ -3,10 +3,17 @@ import { Badge } from "../ui/Badge";
 import { InstallCommand } from "./InstallCommand";
 import { AISection } from "./AISection";
 import { Footer } from "../layout/Footer";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 
 export const TechDetail = ({ activeItem, onClose }) => {
   const scrollRef = useRef(null);
+
+  // Resetear scroll al cambiar de tecnología
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo({ top: 0, behavior: "instant" });
+    }
+  }, [activeItem]);
 
   const scrollToTop = () => {
     if (scrollRef.current) {
