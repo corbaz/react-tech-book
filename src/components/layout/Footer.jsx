@@ -43,79 +43,79 @@ export const Footer = () => {
   }, []);
 
   return (
-    <footer className="bg-black backdrop-blur border-t border-white/10 flex items-center justify-center px-6 py-6 mt-auto">
-      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-        <p className="text-lg font-semibold uppercase text-red-400 text-center md:text-left">
-          &copy; JCC Producciones - <span>{currentDate}</span>
+    <div className="w-full px-6 py-6 mt-auto">
+      <div className="max-w-3xl mx-auto bg-gray-900 rounded-lg p-4 flex flex-col items-center justify-between gap-4 shadow-sm border border-gray-800">
+        <p className="text-blue-400 font-mono text-sm">
+          &copy; JCC Producciones - {currentDate}
         </p>
-        <div className="flex flex-col md:flex-row items-center gap-4 text-red-400">
+        <div className="flex items-center gap-4">
           <div className="flex space-x-4">
             <a
               href="https://www.facebook.com/JulioCorbaz"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Síguenos en Facebook"
-              className="text-[#1877F2] hover:opacity-80 transition duration-300"
+              className="text-gray-400 hover:text-white transition-colors"
             >
-              <Facebook size={24} />
+              <Facebook size={20} />
             </a>
             <a
               href="https://x.com/chipy_corbaz"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Síguenos en X"
-              className="text-white hover:opacity-80 transition duration-300"
+              className="text-gray-400 hover:text-white transition-colors"
             >
-              <XIcon className="w-6 h-6" />
+              <XIcon className="w-5 h-5" />
             </a>
             <a
               href="https://www.instagram.com/juliocorbaz/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Síguenos en Instagram"
-              className="text-[#E4405F] hover:opacity-80 transition duration-300"
+              className="text-gray-400 hover:text-white transition-colors"
             >
-              <Instagram size={24} />
+              <Instagram size={20} />
             </a>
             <a
               href="https://www.youtube.com/@juliocorbaz"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Síguenos en Youtube"
-              className="text-[#FF0000] hover:opacity-80 transition duration-300"
+              className="text-gray-400 hover:text-white transition-colors"
             >
-              <Youtube size={24} />
+              <Youtube size={20} />
             </a>
             <a
               href="https://www.tiktok.com/@chipy.mdp"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Síguenos en TikTok"
-              className="text-[#EE1D52] hover:opacity-80 transition duration-300"
+              className="text-gray-400 hover:text-white transition-colors"
             >
-              <TikTokIcon className="w-6 h-6" />
+              <TikTokIcon className="w-5 h-5" />
             </a>
             <a
               href="https://github.com/corbaz"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Síguenos en GitHub"
-              className="text-white hover:opacity-80 transition duration-300"
+              className="text-gray-400 hover:text-white transition-colors"
             >
-              <Github size={24} />
+              <Github size={20} />
             </a>
             <a
               href="https://www.linkedin.com/in/julio-corbaz/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Síguenos en LinkedIn"
-              className="text-[#0A66C2] hover:opacity-80 transition duration-300"
+              className="text-gray-400 hover:text-white transition-colors"
             >
-              <Linkedin size={24} />
+              <Linkedin size={20} />
             </a>
           </div>
         </div>
       </div>
-    </footer>
+    </div>
   );
 };

@@ -3,7 +3,7 @@ import { Copy, Check } from "lucide-react";
 
 export function InstallCommand({ command }) {
   const [copied, setCopied] = useState(false);
-  const [activeTab, setActiveTab] = useState("npm");
+  const [activeTab, setActiveTab] = useState("bun");
 
   const commands = useMemo(() => {
     if (!command) return { npm: "" };
@@ -49,10 +49,10 @@ export function InstallCommand({ command }) {
     }
 
     return {
+      bun,
       npm: cleanCommand,
       pnpm,
       yarn,
-      bun,
     };
   }, [command]);
 

@@ -1,10 +1,28 @@
-import { ExternalLink, X, BookOpen } from "lucide-react";
+import { ExternalLink, X, BookOpen, ArrowUp, ArrowDown } from "lucide-react";
 import { Badge } from "../ui/Badge";
 import { InstallCommand } from "./InstallCommand";
 import { AISection } from "./AISection";
 import { Footer } from "../layout/Footer";
+import { useRef } from "react";
 
 export const TechDetail = ({ activeItem, onClose }) => {
+  const scrollRef = useRef(null);
+
+  const scrollToTop = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  const scrollToBottom = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo({
+        top: scrollRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  };
+
   if (!activeItem) {
     return (
       <div className="hidden lg:flex flex-1 flex-col h-full bg-gray-50/50">
@@ -24,7 +42,38 @@ export const TechDetail = ({ activeItem, onClose }) => {
   const Icon = activeItem.icon;
 
   return (
-    <div className="flex-1 overflow-y-auto bg-white h-full relative animate-in fade-in duration-300 flex flex-col">
+    <div
+      ref={scrollRef}
+      className="flex-1 overflow-y-auto bg-white h-full relative animate-in fade-in duration-300 flex flex-col no-scrollbar"
+    >
+      <style>{`
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .no-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
+
+      {/* Botones de control de scroll flotantes */}
+      <div className="fixed right-6 top-1/2 transform -translate-y-1/2 flex flex-col gap-2 z-50">
+        <button
+          onClick={scrollToTop}
+          className="p-2 bg-gray-900 text-white rounded-full shadow-lg"
+          title="Ir arriba"
+        >
+          <ArrowUp size={20} />
+        </button>
+        <button
+          onClick={scrollToBottom}
+          className="p-2 bg-gray-900 text-white rounded-full shadow-lg"
+          title="Ir abajo"
+        >
+          <ArrowDown size={20} />
+        </button>
+      </div>
+
       {/* Botón Cerrar en Móvil */}
       <button
         onClick={onClose}
@@ -129,8 +178,10 @@ export const TechDetail = ({ activeItem, onClose }) => {
       </div>
 
       {/* Sección de IA y Contenido */}
-      <div className="max-w-3xl mx-auto px-6 py-6 flex-1 w-full">
-        <AISection key={activeItem.id} selectedTech={activeItem} />
+      <div className="w-full px-6 py-6 flex-1">
+        <div className="max-w-3xl mx-auto">
+          <AISection key={activeItem.id} selectedTech={activeItem} />
+        </div>
       </div>
 
       <Footer />
