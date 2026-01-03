@@ -152,19 +152,19 @@ export function AISection({ selectedTech }) {
 
   return (
     <div className="mt-0 border-t-0 pt-0">
-      <div className="flex items-center gap-2 mb-4 text-blue-600">
+      <div className="flex items-center gap-2 mb-4 text-blue-600 dark:text-blue-400">
         <Sparkles size={20} />
         <h3 className="font-semibold text-lg">Asistente AI</h3>
       </div>
 
-      <div className="bg-blue-50/50 rounded-xl p-4 border border-blue-100">
+      <div className="bg-blue-50/50 dark:bg-blue-900/20 rounded-xl p-4 border border-blue-100 dark:border-blue-900/50">
         {/* Encabezado: Icono + Texto en línea */}
         <div className="flex items-center gap-3 mb-4">
-          <div className="bg-white p-1.5 rounded-lg shadow-sm">
-            <Bot size={18} className="text-blue-600" />
+          <div className="bg-white dark:bg-gray-800 p-1.5 rounded-lg shadow-sm">
+            <Bot size={18} className="text-blue-600 dark:text-blue-400" />
           </div>
-          <p className="text-sm text-gray-700">
-            ¿Tienes dudas sobre <strong>{selectedTech.name}</strong>? Pregúntame
+          <p className="text-sm text-gray-700 dark:text-gray-300">
+            ¿Tienes dudas sobre <strong className="text-gray-900 dark:text-white">{selectedTech.name}</strong>? Pregúntame
             o elige una sugerencia.
           </p>
         </div>
@@ -178,7 +178,7 @@ export function AISection({ selectedTech }) {
                 setPrompt(sug);
                 generateResponse(sug);
               }}
-              className="text-xs bg-white text-blue-600 px-3 py-1.5 rounded-full border border-blue-100 hover:border-blue-300 transition-colors flex items-center gap-1.5"
+              className="text-xs bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 px-3 py-1.5 rounded-full border border-blue-100 dark:border-blue-900/50 hover:border-blue-300 dark:hover:border-blue-500 transition-colors flex items-center gap-1.5 hover:bg-blue-50 dark:hover:bg-blue-900/30"
             >
               <Lightbulb size={12} />
               {sug}
@@ -188,22 +188,22 @@ export function AISection({ selectedTech }) {
 
         {/* Área de Respuesta - Ancho Completo */}
         {(loading || result || error) && (
-          <div className="bg-white rounded-xl p-6 border border-blue-100 mb-6 shadow-sm animate-in fade-in slide-in-from-bottom-2 relative group">
+          <div className="bg-white dark:bg-gray-900 rounded-xl p-6 border border-blue-100 dark:border-gray-700 mb-6 shadow-sm animate-in fade-in slide-in-from-bottom-2 relative group">
             {loading ? (
-              <div className="flex items-center gap-3 text-gray-600 py-8 justify-center">
-                <div className="animate-spin rounded-full h-5 w-5 border-2 border-blue-600 border-t-transparent"></div>
+              <div className="flex items-center gap-3 text-gray-600 dark:text-gray-400 py-8 justify-center">
+                <div className="animate-spin rounded-full h-5 w-5 border-2 border-blue-600 dark:border-blue-400 border-t-transparent"></div>
                 <span className="font-medium">
                   Analizando documentación y generando respuesta...
                 </span>
               </div>
             ) : error ? (
-              <div className="p-4 bg-red-50 text-red-600 rounded-lg border border-red-100 flex items-center gap-2">
+              <div className="p-4 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-lg border border-red-100 dark:border-red-900/50 flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-red-500"></div>
                 Error: {error}
               </div>
             ) : (
               <>
-                <div className="markdown-content text-gray-800 leading-relaxed">
+                <div className="markdown-content text-gray-800 dark:text-gray-200 leading-relaxed">
                   <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
                     components={{
@@ -211,44 +211,44 @@ export function AISection({ selectedTech }) {
                       code: (props) => <CodeBlock {...props} />,
                       h1: (props) => (
                         <h1
-                          className="text-2xl font-bold text-gray-900 mt-6 mb-4 border-b border-gray-100 pb-2"
+                          className="text-2xl font-bold text-gray-900 dark:text-white mt-6 mb-4 border-b border-gray-100 dark:border-gray-700 pb-2"
                           {...props}
                         />
                       ),
                       h2: (props) => (
                         <h2
-                          className="text-xl font-bold text-gray-800 mt-6 mb-3"
+                          className="text-xl font-bold text-gray-800 dark:text-gray-100 mt-6 mb-3"
                           {...props}
                         />
                       ),
                       h3: (props) => (
                         <h3
-                          className="text-lg font-semibold text-gray-800 mt-4 mb-2"
+                          className="text-lg font-semibold text-gray-800 dark:text-gray-200 mt-4 mb-2"
                           {...props}
                         />
                       ),
                       p: (props) => (
                         <p
-                          className="mb-4 text-base leading-7 text-gray-700"
+                          className="mb-4 text-base leading-7 text-gray-700 dark:text-gray-300"
                           {...props}
                         />
                       ),
                       ul: (props) => (
                         <ul
-                          className="list-disc list-outside ml-6 mb-4 space-y-2 text-gray-700"
+                          className="list-disc list-outside ml-6 mb-4 space-y-2 text-gray-700 dark:text-gray-300"
                           {...props}
                         />
                       ),
                       ol: (props) => (
                         <ol
-                          className="list-decimal list-outside ml-6 mb-4 space-y-2 text-gray-700"
+                          className="list-decimal list-outside ml-6 mb-4 space-y-2 text-gray-700 dark:text-gray-300"
                           {...props}
                         />
                       ),
                       li: (props) => <li className="pl-1" {...props} />,
                       a: (props) => (
                         <a
-                          className="text-blue-600 hover:text-blue-800 font-medium underline decoration-blue-200 hover:decoration-blue-800 transition-all"
+                          className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium underline decoration-blue-200 dark:decoration-blue-800 hover:decoration-blue-800 dark:hover:decoration-blue-400 transition-all"
                           target="_blank"
                           rel="noopener noreferrer"
                           {...props}
@@ -256,27 +256,27 @@ export function AISection({ selectedTech }) {
                       ),
                       blockquote: (props) => (
                         <blockquote
-                          className="border-l-4 border-blue-500 pl-4 py-1 my-4 bg-blue-50/50 italic text-gray-700 rounded-r-lg"
+                          className="border-l-4 border-blue-500 pl-4 py-1 my-4 bg-blue-50/50 dark:bg-blue-900/20 italic text-gray-700 dark:text-gray-300 rounded-r-lg"
                           {...props}
                         />
                       ),
                       table: (props) => (
-                        <div className="overflow-x-auto my-6 rounded-lg border border-gray-200">
+                        <div className="overflow-x-auto my-6 rounded-lg border border-gray-200 dark:border-gray-700">
                           <table
-                            className="min-w-full divide-y divide-gray-200"
+                            className="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
                             {...props}
                           />
                         </div>
                       ),
                       th: (props) => (
                         <th
-                          className="px-4 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          className="px-4 py-3 bg-gray-50 dark:bg-gray-800 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
                           {...props}
                         />
                       ),
                       td: (props) => (
                         <td
-                          className="px-4 py-3 whitespace-nowrap text-sm text-gray-700 border-t border-gray-100"
+                          className="px-4 py-3 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300 border-t border-gray-100 dark:border-gray-700"
                           {...props}
                         />
                       ),
@@ -287,16 +287,16 @@ export function AISection({ selectedTech }) {
                 </div>
 
                 {/* Botón de Copiar Respuesta Completa */}
-                <div className="flex justify-end mt-6 pt-4 border-t border-gray-100">
+                <div className="flex justify-end mt-6 pt-4 border-t border-gray-100 dark:border-gray-700">
                   <button
                     onClick={handleCopyResponse}
-                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors border border-transparent hover:border-blue-100"
+                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors border border-transparent hover:border-blue-100 dark:hover:border-blue-800"
                     title="Copiar respuesta completa"
                   >
                     {copied ? (
                       <>
                         <Check size={16} className="text-green-500" />
-                        <span className="text-green-600">
+                        <span className="text-green-600 dark:text-green-400">
                           Respuesta copiada
                         </span>
                       </>
