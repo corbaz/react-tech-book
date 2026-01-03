@@ -5,6 +5,8 @@ import {
   ChevronRight,
   ChevronDown,
   FolderOpen,
+  ChevronsDown,
+  ChevronsUp,
 } from "lucide-react";
 import pkg from "../../../package.json";
 
@@ -102,6 +104,34 @@ export const Sidebar = ({
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
             />
+          </div>
+
+          <div className="flex items-center justify-end mt-6 px-1">
+            <button
+              onClick={() => {
+                const allCategories = Object.keys(groupedItems);
+                const isAllExpanded = expandedCategories.length === allCategories.length;
+                setExpandedCategories(isAllExpanded ? [] : allCategories);
+              }}
+              className="text-xs font-medium text-blue-600 hover:text-blue-700 flex items-center gap-1 transition-colors"
+              title={
+                expandedCategories.length === Object.keys(groupedItems).length
+                  ? "Contraer todas las categorías"
+                  : "Expandir todas las categorías"
+              }
+            >
+              {expandedCategories.length === Object.keys(groupedItems).length ? (
+                <>
+                  <ChevronsUp size={14} />
+                  <span>Contraer todo</span>
+                </>
+              ) : (
+                <>
+                  <ChevronsDown size={14} />
+                  <span>Expandir todo</span>
+                </>
+              )}
+            </button>
           </div>
         </div>
 
