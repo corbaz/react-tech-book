@@ -1,4 +1,4 @@
-import { ExternalLink, X, BookOpen, ArrowUp, ArrowDown } from "lucide-react";
+import { ExternalLink, BookOpen, ArrowUp, ArrowDown } from "lucide-react";
 import { Badge } from "../ui/Badge";
 import { InstallCommand } from "./InstallCommand";
 import { AISection } from "./AISection";
@@ -57,7 +57,7 @@ export const TechDetail = ({ activeItem, onClose }) => {
       `}</style>
 
       {/* Botones de control de scroll flotantes */}
-      <div className="fixed right-6 top-1/2 transform -translate-y-1/2 flex flex-col gap-2 z-50">
+      <div className="fixed right-6 top-1/2 transform -translate-y-1/2 flex flex-col gap-2 z-10">
         <button
           onClick={scrollToTop}
           className="p-2 bg-gray-900 text-white rounded-full shadow-lg"
@@ -73,14 +73,6 @@ export const TechDetail = ({ activeItem, onClose }) => {
           <ArrowDown size={20} />
         </button>
       </div>
-
-      {/* Botón Cerrar en Móvil */}
-      <button
-        onClick={onClose}
-        className="lg:hidden absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 z-10"
-      >
-        <X size={24} />
-      </button>
 
       {/* Hero Header */}
       <div className="bg-white border-b border-gray-100 p-6 pb-8">

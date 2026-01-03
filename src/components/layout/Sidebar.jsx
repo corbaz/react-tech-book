@@ -82,7 +82,7 @@ export const Sidebar = ({
                 <h1 className="font-bold text-xl tracking-tight">
                   React Stack
                 </h1>
-                <span className="text-xs font-mono text-gray-500 pt-1">
+                <span className="text-xs font-mono text-blue-600 pt-1">
                   v.{pkg.version}
                 </span>
               </div>

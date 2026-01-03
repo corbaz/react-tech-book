@@ -9,12 +9,12 @@ export const MobileHeader = ({ onMenuClick }) => (
       </div>
       <div className="flex items-baseline gap-1.5">
         <span className="font-bold text-gray-900">React Stack</span>
-        <span className="text-xs font-mono text-gray-500">v.{pkg.version}</span>
+        <span className="text-xs font-mono text-blue-600">v.{pkg.version}</span>
       </div>
     </div>
     <button
       onClick={onMenuClick}
-      className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg"
+      className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
     >
       <Menu size={24} />
     </button>
