@@ -9,26 +9,19 @@ export function useTheme() {
         return storedTheme;
       }
     }
-    // 2. Si no, revisar la preferencia del sistema operativo
-    if (
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-    ) {
-      return "dark";
-    }
-    // 3. Default
+    // 2. Si no, default a light (ignorando preferencia de sistema por petición)
     return "light";
   });
 
   useEffect(() => {
     const root = window.document.documentElement;
-    
+
     // Remover la clase anterior para evitar conflictos
     root.classList.remove("light", "dark");
-    
+
     // Agregar la clase actual
     root.classList.add(theme);
-    
+
     // Guardar en localStorage
     localStorage.setItem("theme", theme);
   }, [theme]);

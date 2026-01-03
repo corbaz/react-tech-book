@@ -128,7 +128,8 @@ export const Sidebar = ({
                   : "Expandir todas las categorías"
               }
             >
-              {expandedCategories.length === Object.keys(groupedItems).length ? (
+              {expandedCategories.length ===
+              Object.keys(groupedItems).length ? (
                 <>
                   <ChevronsUp size={14} />
                   <span>Contraer todo</span>
@@ -184,7 +185,11 @@ export const Sidebar = ({
                   <div className="flex items-center gap-2">
                     <FolderOpen
                       size={16}
-                      className={isExpanded ? "text-blue-500" : "text-gray-400 dark:text-gray-500"}
+                      className={
+                        isExpanded
+                          ? "text-blue-500"
+                          : "text-gray-400 dark:text-gray-500"
+                      }
                     />
                     <span>{category}</span>
                     <span className="bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-[10px] px-1.5 py-0.5 rounded-full group-hover:bg-blue-50 dark:group-hover:bg-blue-900/30 group-hover:text-blue-600 dark:group-hover:text-blue-400">

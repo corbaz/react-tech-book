@@ -9,7 +9,9 @@ export const MobileHeader = ({ onMenuClick }) => (
         <BookOpen size={18} />
       </div>
       <div className="flex items-baseline gap-1.5">
-        <span className="font-bold text-gray-900 dark:text-white">React Stack</span>
+        <span className="font-bold text-gray-900 dark:text-white">
+          React Stack
+        </span>
         <span className="text-xs font-mono text-blue-600">v.{pkg.version}</span>
       </div>
     </div>

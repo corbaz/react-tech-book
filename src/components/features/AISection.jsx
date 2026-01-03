@@ -152,7 +152,7 @@ export function AISection({ selectedTech }) {
 
   return (
     <div className="mt-0 border-t-0 pt-0">
-      <div className="flex items-center gap-2 mb-4 text-blue-600 dark:text-blue-400">
+      <div className="flex items-center justify-center gap-2 mb-4 text-blue-600 dark:text-blue-400">
         <Sparkles size={20} />
         <h3 className="font-semibold text-lg">Asistente AI</h3>
       </div>
@@ -164,8 +164,11 @@ export function AISection({ selectedTech }) {
             <Bot size={18} className="text-blue-600 dark:text-blue-400" />
           </div>
           <p className="text-sm text-gray-700 dark:text-gray-300">
-            ¿Tienes dudas sobre <strong className="text-gray-900 dark:text-white">{selectedTech.name}</strong>? Pregúntame
-            o elige una sugerencia.
+            ¿Tienes dudas sobre{" "}
+            <strong className="text-gray-900 dark:text-white">
+              {selectedTech.name}
+            </strong>
+            ? Pregúntame o elige una sugerencia.
           </p>
         </div>
 
@@ -320,7 +323,7 @@ export function AISection({ selectedTech }) {
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder={`Pregunta sobre ${selectedTech.name}...`}
-            className="w-full pl-4 pr-24 py-3.5 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all text-base shadow-sm"
+            className="w-full pl-4 pr-24 py-3.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all text-base shadow-sm"
           />
           <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
             {prompt && (

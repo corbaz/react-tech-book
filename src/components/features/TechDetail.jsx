@@ -5,7 +5,7 @@ import { AISection } from "./AISection";
 import { Footer } from "../layout/Footer";
 import { useRef, useEffect } from "react";
 
-export const TechDetail = ({ activeItem, onClose }) => {
+export const TechDetail = ({ activeItem }) => {
   const scrollRef = useRef(null);
 
   // Resetear scroll al cambiar de tecnología
@@ -82,7 +82,7 @@ export const TechDetail = ({ activeItem, onClose }) => {
       </div>
 
       {/* Hero Header */}
-      <div className="bg-white dark:bg-black border-b border-gray-100 dark:border-gray-800 p-6 pb-8">
+      <div className="bg-white dark:bg-black p-6 pb-5">
         <div className="max-w-3xl mx-auto">
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-6">
             <div className="flex gap-4">
@@ -98,7 +98,10 @@ export const TechDetail = ({ activeItem, onClose }) => {
                     {activeItem.category}
                   </Badge>
                   {activeItem.tags.map((tag) => (
-                    <Badge key={tag} className="bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300">
+                    <Badge
+                      key={tag}
+                      className="bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300"
+                    >
                       {tag}
                     </Badge>
                   ))}
@@ -177,7 +180,7 @@ export const TechDetail = ({ activeItem, onClose }) => {
       </div>
 
       {/* Sección de IA y Contenido */}
-      <div className="w-full px-6 py-6 flex-1">
+      <div className="w-full px-6 py-0 flex-1">
         <div className="max-w-3xl mx-auto">
           <AISection key={activeItem.id} selectedTech={activeItem} />
         </div>
