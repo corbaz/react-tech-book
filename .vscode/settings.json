@@ -1,0 +1,16 @@
+{
+    "editor.inlineSuggest.edits.showCollapsed": true,
+    "editor.inlineSuggest.experimental.showOnSuggestConflict": "always",
+    "editor.inlineSuggest.minShowDelay": 1000,
+    "editor.inlineSuggest.showToolbar": "always",
+    "editor.quickSuggestionsDelay": 1000,
+    "editor.suggest.preview": true,
+    "editor.suggest.showStatusBar": true,
+    "editor.suggest.snippetsPreventQuickSuggestions": true,
+    "editor.hover.hidingDelay": 10000,
+    "workbench.sash.hoverDelay": 100,
+    "editor.hover.delay": 100,
+    "editor.hover.above": true,
+    "editor.hover.enabled": true,
+    "editor.hover.sticky": true
+}

@@ -110,7 +110,8 @@ export const Sidebar = ({
             <button
               onClick={() => {
                 const allCategories = Object.keys(groupedItems);
-                const isAllExpanded = expandedCategories.length === allCategories.length;
+                const isAllExpanded =
+                  expandedCategories.length === allCategories.length;
                 setExpandedCategories(isAllExpanded ? [] : allCategories);
               }}
               className="text-xs font-medium text-blue-600 hover:text-blue-700 flex items-center gap-1 transition-colors"
@@ -120,7 +121,8 @@ export const Sidebar = ({
                   : "Expandir todas las categorías"
               }
             >
-              {expandedCategories.length === Object.keys(groupedItems).length ? (
+              {expandedCategories.length ===
+              Object.keys(groupedItems).length ? (
                 <>
                   <ChevronsUp size={14} />
                   <span>Contraer todo</span>
