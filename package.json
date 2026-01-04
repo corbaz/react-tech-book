@@ -4,9 +4,13 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "bun-upgrade": "bun upgrade",
+    "ncu-check": "ncu",
+    "clean": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"Remove-Item -Recurse -Force node_modules -ErrorAction SilentlyContinue; exit 0\"",
+    "update": "bun run clean && bun install",
     "dev": "vite --host",
-    "lint": "eslint .",
     "format": "prettier --write .",
+    "lint": "eslint .",
     "build": "vite build",
     "deploy": "surge dist --domain jcc-book-react.surge.sh",
     "preview": "vite preview --host"

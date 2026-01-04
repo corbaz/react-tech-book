@@ -34,7 +34,7 @@ export const Footer = () => {
       const year = now.getFullYear();
       const hours = String(now.getHours()).padStart(2, "0");
       const minutes = String(now.getMinutes()).padStart(2, "0");
-      setCurrentDate(`${day}/${month}/${year} ${hours}:${minutes}`);
+      setCurrentDate(`${day}/${month}/${year} - ${hours}:${minutes}`);
     };
 
     updateDate();
@@ -45,8 +45,10 @@ export const Footer = () => {
   return (
     <div className="w-full px-6 py-6 mt-auto">
       <div className="max-w-3xl mx-auto bg-gray-900 rounded-lg p-4 flex flex-col items-center justify-between gap-4 shadow-sm border border-gray-800">
-        <p className="text-blue-400 font-mono text-sm">
-          &copy; JCC Producciones - {currentDate}
+        <p className="text-blue-400 font-mono text-sm text-center flex flex-col sm:flex-row gap-1 sm:gap-2">
+          <span>&copy; JCC Producciones</span>
+          <span className="hidden sm:inline">-</span>
+          <span>{currentDate}</span>
         </p>
         <div className="flex items-center gap-4">
           <div className="flex space-x-4">

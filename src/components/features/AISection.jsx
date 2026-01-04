@@ -91,7 +91,7 @@ const CodeBlock = ({ inline, className, children, ...props }) => {
       </div>
       <div className="p-5 overflow-x-auto bg-[#0d1117]">
         <code
-          className="font-mono text-[13px] sm:text-sm text-gray-300 leading-relaxed block"
+          className="font-mono text-[13px] sm:text-sm text-gray-300 leading-relaxed block whitespace-pre"
           {...props}
         >
           {children}
@@ -199,6 +199,57 @@ export function AISection({ selectedTech }) {
                   Analizando documentación y generando respuesta...
                 </span>
               </div>
+            ) : error === "MISSING_API_KEY" ? (
+              <div className="p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-100 dark:border-blue-900/50">
+                <div className="flex items-center gap-2 mb-3">
+                  <Lightbulb className="text-amber-500" size={24} />
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+                    Configuración Requerida
+                  </h3>
+                </div>
+                <p className="text-gray-700 dark:text-gray-300 mb-4 text-sm leading-relaxed">
+                  Para utilizar el asistente de IA en este entorno, es necesario
+                  configurar tu propia API Key de Google Gemini. Esta clave se
+                  guardará de forma segura en tu navegador.
+                </p>
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const key = e.target.apiKey.value.trim();
+                    if (key) {
+                      localStorage.setItem("gemini_api_key", key);
+                      // Reintentar la consulta automáticamente
+                      handleConsult(e);
+                    }
+                  }}
+                  className="flex flex-col sm:flex-row gap-3"
+                >
+                  <input
+                    type="password"
+                    name="apiKey"
+                    placeholder="Pega tu API Key de Gemini aquí..."
+                    className="flex-1 px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none text-sm"
+                    required
+                  />
+                  <button
+                    type="submit"
+                    className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors text-sm shadow-sm whitespace-nowrap"
+                  >
+                    Guardar y Continuar
+                  </button>
+                </form>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-3">
+                  ¿No tienes una key?{" "}
+                  <a
+                    href="https://aistudio.google.com/app/apikey"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 dark:text-blue-400 hover:underline"
+                  >
+                    Consíguela gratis aquí
+                  </a>
+                </p>
+              </div>
             ) : error ? (
               <div className="p-4 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-lg border border-red-100 dark:border-red-900/50 flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-red-500"></div>
@@ -206,7 +257,7 @@ export function AISection({ selectedTech }) {
               </div>
             ) : (
               <>
-                <div className="markdown-content text-gray-800 dark:text-gray-200 leading-relaxed">
+                <div className="markdown-content text-gray-800 dark:text-gray-200 leading-relaxed font-mono text-sm">
                   <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
                     components={{
@@ -214,44 +265,46 @@ export function AISection({ selectedTech }) {
                       code: (props) => <CodeBlock {...props} />,
                       h1: (props) => (
                         <h1
-                          className="text-2xl font-bold text-gray-900 dark:text-white mt-6 mb-4 border-b border-gray-100 dark:border-gray-700 pb-2"
+                          className="text-2xl font-bold font-mono text-gray-900 dark:text-white mt-6 mb-4 border-b border-gray-100 dark:border-gray-700 pb-2"
                           {...props}
                         />
                       ),
                       h2: (props) => (
                         <h2
-                          className="text-xl font-bold text-gray-800 dark:text-gray-100 mt-6 mb-3"
+                          className="text-xl font-bold font-mono text-gray-800 dark:text-gray-100 mt-6 mb-3"
                           {...props}
                         />
                       ),
                       h3: (props) => (
                         <h3
-                          className="text-lg font-semibold text-gray-800 dark:text-gray-200 mt-4 mb-2"
+                          className="text-lg font-semibold font-mono text-gray-800 dark:text-gray-200 mt-4 mb-2"
                           {...props}
                         />
                       ),
                       p: (props) => (
                         <p
-                          className="mb-4 text-base leading-7 text-gray-700 dark:text-gray-300"
+                          className="mb-4 text-base font-mono leading-7 text-gray-700 dark:text-gray-300"
                           {...props}
                         />
                       ),
                       ul: (props) => (
                         <ul
-                          className="list-disc list-outside ml-6 mb-4 space-y-2 text-gray-700 dark:text-gray-300"
+                          className="list-disc list-outside ml-6 mb-4 space-y-2 font-mono text-gray-700 dark:text-gray-300"
                           {...props}
                         />
                       ),
                       ol: (props) => (
                         <ol
-                          className="list-decimal list-outside ml-6 mb-4 space-y-2 text-gray-700 dark:text-gray-300"
+                          className="list-decimal list-outside ml-6 mb-4 space-y-2 font-mono text-gray-700 dark:text-gray-300"
                           {...props}
                         />
                       ),
-                      li: (props) => <li className="pl-1" {...props} />,
+                      li: (props) => (
+                        <li className="pl-1 font-mono" {...props} />
+                      ),
                       a: (props) => (
                         <a
-                          className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium underline decoration-blue-200 dark:decoration-blue-800 hover:decoration-blue-800 dark:hover:decoration-blue-400 transition-all"
+                          className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium font-mono underline decoration-blue-200 dark:decoration-blue-800 hover:decoration-blue-800 dark:hover:decoration-blue-400 transition-all"
                           target="_blank"
                           rel="noopener noreferrer"
                           {...props}
@@ -259,27 +312,27 @@ export function AISection({ selectedTech }) {
                       ),
                       blockquote: (props) => (
                         <blockquote
-                          className="border-l-4 border-blue-500 pl-4 py-1 my-4 bg-blue-50/50 dark:bg-blue-900/20 italic text-gray-700 dark:text-gray-300 rounded-r-lg"
+                          className="border-l-4 border-blue-500 pl-4 py-1 my-4 bg-blue-50/50 dark:bg-blue-900/20 italic font-mono text-gray-700 dark:text-gray-300 rounded-r-lg"
                           {...props}
                         />
                       ),
                       table: (props) => (
                         <div className="overflow-x-auto my-6 rounded-lg border border-gray-200 dark:border-gray-700">
                           <table
-                            className="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+                            className="min-w-full divide-y divide-gray-200 dark:divide-gray-700 font-mono"
                             {...props}
                           />
                         </div>
                       ),
                       th: (props) => (
                         <th
-                          className="px-4 py-3 bg-gray-50 dark:bg-gray-800 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+                          className="px-4 py-3 bg-gray-50 dark:bg-gray-800 text-left text-xs font-medium font-mono text-gray-500 dark:text-gray-400 uppercase tracking-wider"
                           {...props}
                         />
                       ),
                       td: (props) => (
                         <td
-                          className="px-4 py-3 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300 border-t border-gray-100 dark:border-gray-700"
+                          className="px-4 py-3 whitespace-nowrap text-sm font-mono text-gray-700 dark:text-gray-300 border-t border-gray-100 dark:border-gray-700"
                           {...props}
                         />
                       ),

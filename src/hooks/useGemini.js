@@ -16,7 +16,20 @@ export const useGemini = () => {
     setResult("");
 
     try {
-      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+      // 1. Intentar obtener del localStorage (producción/usuario)
+      let apiKey = localStorage.getItem("gemini_api_key");
+
+      // 2. Si no hay en storage y estamos en DEV, intentar del .env
+      // En build de producción, import.meta.env.DEV es false, así que esta rama se elimina
+      // y no se expone la key del .env local en el bundle.
+      if (!apiKey && import.meta.env.DEV) {
+        apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+      }
+
+      if (!apiKey) {
+        throw new Error("MISSING_API_KEY");
+      }
+
       const text = await GeminiService.generateContent(prompt, apiKey);
       setResult(text);
     } catch (err) {

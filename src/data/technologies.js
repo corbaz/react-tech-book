@@ -511,7 +511,7 @@ export const technologies = [
   },
   {
     id: "glm",
-    name: "GLM-4.7 (Zhipu AI)",
+    name: "GLM - Zhipu AI",
     category: "AI & MCP",
     icon: Cpu,
     description:

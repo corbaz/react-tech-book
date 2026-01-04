@@ -27,12 +27,12 @@ export const useTechSelection = () => {
   // Filtrar ítems
   const filteredItems = useMemo(() => {
     return technologies.filter((item) => {
-      const matchesSearch =
-        item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.tags.some((tag) =>
-          tag.toLowerCase().includes(searchTerm.toLowerCase()),
-        );
+      // Normalizamos el término de búsqueda
+      const term = searchTerm.toLowerCase().trim();
+
+      // Búsqueda precisa: Solo en Nombre para evitar coincidencias indirectas por tags
+      const matchesSearch = item.name.toLowerCase().includes(term);
+
       const matchesCategory =
         selectedCategory === "Todos" || item.category === selectedCategory;
       return matchesSearch && matchesCategory;
